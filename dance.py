@@ -1,6 +1,8 @@
 """
 Dance is a sequence of patterns.
 """
+import random
+
 from const import *
 import obj
 import pattern
@@ -13,29 +15,43 @@ class Intro:
         self.start_frame = frame
         self.active = True
     
-    def actuate(self, frame):
-        match frame % self.start_frame: # Radiate from center
-            case 0:
-                inner_circle = pattern.pointed_circle(      target_xy= (self.x_pos , self.y_pos),\
-                                                            radius= 100,\
-                                                            points=30)
-                outer_circle = pattern.pointed_circle(      target_xy= (self.x_pos , self.y_pos),\
-                                                            radius= 120,\
-                                                            points=30)
-                out_bound_bullets = []
-                for i in range(len(inner_circle)):
-                    io_relation = f.translate_relation(inner_circle[i], outer_circle[i])
-                    out_bound_bullets.append(obj.Bullet(    x_pos=inner_circle[i][0],\
-                                                            y_pos=inner_circle[i][1], \
-                                                            x_speed= io_relation[0],\
-                                                            y_speed= io_relation[1]))
-                print("success", len(out_bound_bullets))
-                return out_bound_bullets
-            case 100:
-                self.active = False
-                return None
-            case _:
-                return None
+    def actuate(self, frame, target_xy):
+        phase_1_end = 300 + self.start_frame
+        phase_2_end = 900 + self.start_frame
+        frame = self.start_frame + frame
+
+        # Phase 1
+        if frame < phase_1_end:
+            start_width = WIDTH
+            end_width = 50
+            zoom_step = (WIDTH-end_width) / phase_1_end * frame
+            points = 50
+            inner_circle = pattern.pointed_circle(      target_xy= target_xy,\
+                                                        radius= start_width - zoom_step,\
+                                                        points=points)
+            outer_circle = pattern.pointed_circle(      target_xy= target_xy,\
+                                                        radius= start_width - zoom_step + 20,\
+                                                        points=points)
+            out_bound_bullets = []
+            for i in range(len(inner_circle)):
+                io_relation = f.translate_relation(inner_circle[i], outer_circle[i])
+                mixer = random.randint(-10,10)
+                out_bound_bullets.append(obj.Bullet(    x_pos=inner_circle[i][0] + mixer,\
+                                                        y_pos=inner_circle[i][1] + mixer, \
+                                                        x_speed= io_relation[0],\
+                                                        y_speed= io_relation[1]))
+            return out_bound_bullets
+        
+        # phase 2
+        elif frame < phase_2_end:
+            return None
+
+
+        # End
+        else:
+            return None
+
+
 
 
 

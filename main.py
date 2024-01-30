@@ -274,14 +274,15 @@ def main_game(menu_settings)-> dict:
 
         # Bullet deployment from dances
         if frame == 30:
-            intro = dance.Intro(frame)
+            intro = dance.Intro(frame = frame)
             pattern_objects.append(intro)
 
         for pattern in pattern_objects:
             if pattern.active:
-                incoming = pattern.actuate(frame)
+                incoming = pattern.actuate( frame = frame,\
+                                            target_xy = (WIDTH/2 , HEIGHT/2))
                 if incoming != None:
-                    
+
                     for incoming_bullet in incoming:
                         incoming_bullet.surface = img_bl_32px_red_orb
                         bullet_objects.append(incoming_bullet)
@@ -337,7 +338,7 @@ def main_game(menu_settings)-> dict:
 
         # Dev monitoring
         if frame % 5 == 0:
-            print(frame, len(bullet_objects), len(deletion_objects))
+            print(frame, len(bullet_objects))
 
         # Draw
         for queue in draw_queue:

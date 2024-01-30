@@ -1,5 +1,5 @@
 """
-Various helper functions
+Various general functions.
 """
 
 import random
