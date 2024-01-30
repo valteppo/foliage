@@ -6,7 +6,7 @@ Main execution
 import pygame
 import os
 import sys
-import random
+import time
 from pygame.locals import *
 
 # Game modules
@@ -280,9 +280,8 @@ def main_game(menu_settings)-> dict:
         for pattern in pattern_objects:
             if pattern.active:
                 incoming = pattern.actuate( frame = frame,\
-                                            target_xy = (WIDTH/2 , HEIGHT/2))
+                                            target_xy = (player_one.x_pos , player_one.y_pos))
                 if incoming != None:
-
                     for incoming_bullet in incoming:
                         incoming_bullet.surface = img_bl_32px_red_orb
                         bullet_objects.append(incoming_bullet)
@@ -320,7 +319,9 @@ def main_game(menu_settings)-> dict:
                         player_one.score += 1
                     # Touching bullet
                     if bullet_distance < single_bullet.size/2 + player_one.hit_distance and single_bullet.faction < 0:
-                        return player_one.score
+                        #time.sleep(1)
+                        #return player_one.score
+                        pass
                     # Recruit bullet
                     if single_bullet.y_pos - player_one.y_pos > 20 and abs(abs(player_one.x_pos) - abs(single_bullet.x_pos)) < 30 and single_bullet.faction == -1:
                         single_bullet.surface = img_bl_12px_green
