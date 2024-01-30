@@ -1,0 +1,19 @@
+
+## Constants
+WIDTH = 960
+HEIGHT = 600
+GRID_SIZE = 50
+FPS_LIMIT = 60
+MENU_FONT = "Calibri"
+
+# Colours
+BLACK = (0,0,0)
+WHITE = (255,255,255)
+TEAL = (0,128,128)
+PINK = (255,20,147)
+RED = (255,0,0)
+SILVER = (135,135,135)
+GOLD = (255,215,0)
+ROYAL_BLUE = (65,105,225)
+DIFFICULTY_COLOUR = {True:WHITE,\
+                     False:SILVER}
